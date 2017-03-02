@@ -1,0 +1,270 @@
+<html> 
+	<head>
+        <meta charset="utf-8" />
+        <title>Checkers</title>
+		<style>
+		#fadeOut{
+			display: none;
+			opacity: .8;
+			position: absolute;
+			top: 0px;
+			left: 0px;
+			background: #FFF;
+			width: 100%;
+			height: 100%;
+			z-index: 1;
+			x-index: 0;
+			y-index:0;
+		}
+		#AlertBox{
+			display: none;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			background: #000;
+			border-radius:7px; 
+			width:400px;
+			z-index: 10;
+		}
+		
+		#AlertBox > div{ background:#FFFFFF; margin:4px; }
+		#AlertBox > div > #AlertHeader{ background: #FFFFFF; font-size:40px; padding:10px; color:#0000FF;text-align:center }
+		#AlertBox > div > #AlertBody{ background:#FFFFFF; padding:30px; color:#0000FF; text-align:center }
+		#AlertBox > div > #AlertButtons{ background: #FFFFFF; padding:10px; text-align:right; }
+		
+		
+		
+		#header{
+			font-size:80px;
+		}
+		
+		#main_blocks{
+			position: relative;
+			width: 1400px;
+			height:700px;
+			//border: 3px solid #73AD21;
+			
+		}
+		
+		#CPU_ScoreBoard{
+			position: absolute;
+			top:250px;
+			left:330px;
+			text-align:center;
+			font-size:40px;
+		}
+		
+		#gameBoard{
+		
+			position: absolute;
+			top:0px;
+			left:450px;
+			right:400px
+			margin:20px;
+			text-align:center;
+		}
+		
+		#Client_ScoreBoard{
+			position: absolute;
+			top:250px;
+			left:990px;
+			text-align:center;
+			font-size:40px;
+		}
+		
+		#play_again{
+			position: absolute;
+			right:0;
+		}
+		
+		#turn{
+			position: absolute;
+			left:0;
+		}
+		
+		#turnColor{
+			position: absolute;
+			left: 45px;
+			bottom: -17px;
+			border: 1px solid;
+		}
+		
+		#CPU_score{color:red;}
+		#Client_score{color:green;}
+		
+		#AI_ColorPicker{
+			position: absolute;
+			width: 350px;
+			top:175;
+			left:0px;
+			text-align:center;
+		}
+		
+		#Client_ColorPicker{
+			position: absolute;
+			width: 350px;
+			top:175;
+			right:10px;
+			text-align:center;
+		}
+		
+		#AI_ColorDisplay{
+			background:black;
+		}
+		
+		#Client_ColorDisplay{
+			background:black;
+		}
+		
+		
+		input{
+			width:40px;
+			border-radius: 1em;
+			margin-top: 5px;
+			margin-right:5px;
+			text-align:center;
+		}
+		
+		#AI_KingChecked{
+			position: absolute;
+			width: 30px;
+			left: 0px;
+			bottom: 0px;
+		}
+		
+		#Client_KingChecked{
+			position: absolute;
+			width: 30px;
+			left: 0px;
+			bottom: 0px;
+		}
+		
+		</style>
+    </head>
+    <body bgcolor="#6BC8D9">
+		<div id="fadeOut"></div>
+		<div id="main_blocks">
+			<div id="AlertBox">
+				<div>
+					<div id="AlertHeader"></div>
+					<div id="AlertBody"></div>
+					<div id="AlertButtons">
+						<button id="yes_button">YES</button>
+						<button id="no_button">NO</button>
+					</div>
+				</div>
+			</div>
+		
+			<div id="AI_ColorPicker">
+				<div>
+					<canvas id="AI_ColorDisplay" width="200" height="200" style="border:1px solid #000000"; bgcolor="white";></canvas>
+				</div>
+				<div>
+					<label>Trim: </label>
+					<label>r:
+					<input id="AI_RedAmtTrim" width="50px" value="153" />
+					<label>g: </label>
+					<input id="AI_GreenAmtTrim" width="50px" value="153"/>
+					<label>b: </label>
+					<input id="AI_BlueAmtTrim" width="50px" value="153"/>          
+					<button id="apply_AITrim">Apply</button>
+				</div>
+				<div>
+					<label>Base: </label>
+					<label>r:
+					<input id="AI_RedAmtBase" width="50px" value="255"/>
+					<label>g: </label>
+					<input id="AI_GreenAmtBase" width="50px" value = "255"/>
+					<label>b: </label>
+					<input id="AI_BlueAmtBase" width="50px" value="255"/>
+					<button id="apply_AIBase">Apply</button>
+				</div>
+				<div>
+					<label>King: </label>
+					<label>r:
+					<input id="AI_RedAmtKing" width="50px" value="230"/>
+					<label>g: </label>
+					<input id="AI_GreenAmtKing" width="50px" value="172"/>
+					<label>b: </label>
+					<input id="AI_BlueAmtKing" width="50px" value="0"/>
+					<button id="apply_AIKing">Apply</button>
+					<input type="checkbox" id="AI_KingChecked">
+				</div>
+			</div>
+		
+		
+			<div id="Client_ColorPicker">
+				<div>
+					<canvas id="Client_ColorDisplay" width="200" height="200" style="border:1px solid #000000;"></canvas>
+				</div>
+				<div>
+					<label>Trim: </label>
+					<label>r:
+					<input id="Client_RedAmtTrim" width="50px" value="153"/>
+					<label>g: </label>
+					<input id="Client_GreenAmtTrim" width="50px" value="0"/>
+					<label>b: </label>
+					<input id="Client_BlueAmtTrim" width="50px" value="0"/>
+					<button id="apply_ClientTrimTrim">Apply</button>
+				</div>
+				<div>
+					<label>Base: </label>
+					<label>r:
+					<input id="Client_RedAmtBase" width="50px" value="255"/>
+					<label>g: </label>
+					<input id="Client_GreenAmtBase" width="50px" value="0"/>
+					<label>b: </label>
+					<input id="Client_BlueAmtBase" width="50px" value="0"/>
+					<button id="apply_ClientBase">Apply</button>
+				</div>
+				<div>
+					<label>King: </label>
+					<label>r:
+					<input id="Client_RedAmtKing" width="50px" value="230"/>
+					<label>g: </label>
+					<input id="Client_GreenAmtKing" width="50px" value="172"/>
+					<label>b: </label>
+					<input id="Client_BlueAmtKing" width="50px" value="0"/>
+					<button id="apply_ClientKing">Apply</button>
+					<input type="checkbox" id="Client_KingChecked">
+				</div>
+			</div>
+		
+			<div id="CPU_ScoreBoard">
+				<div>
+					<label id="CPU_header">CPU</label>
+				</div>
+				<div>
+					<label id="CPU_score">0</label>
+				</div>
+			</div>
+		
+			<div id="gameBoard">
+				<div>
+					<label id="header">Checkers</label>
+				</div>
+				<div>
+					<canvas id="checkers" width="500" height="500" style="border:1px solid #000000;"></canvas>
+				</div>
+				<div>
+					<label id="turn">Turn:</label>
+					<canvas id="turnColor" width="20" height="12"></canvas>
+					<button id="play_again">Play Again</button>
+				</div>
+			</div>
+			
+			<div id="Client_ScoreBoard">
+				<div>
+					<label id="Client_header">You</label>
+				</div>
+				<div>
+					<label id="Client_score">0</label>
+				</div>
+			</div>
+		</div>
+		
+		
+		<script src='checkers.js'></script>
+    </body>
+</html>
